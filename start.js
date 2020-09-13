@@ -95,14 +95,25 @@ function transformResponse() {
 }
 
 // ERROR HANDLING
-function errorHandling() {
-  console.log("Error Handling");
+async function errorHandling() {
+  try {
+    const response = await axios.get(
+      "https://jsonplaceholder.typicode.com/todoss?_limit=5"
+    );
+    showOutput(response);
+  } catch (error) {
+    // Server responds with anything other than 2xx
+    if (error.response) {
+      console.error(error.response);
+    } else if (error.request) {
+      // Request was made but no response
+      console.error("There was no response");
+    }
+  }
 }
 
 // CANCEL TOKEN
-function cancelToken() {
-  console.log("Cancel Token");
-}
+function cancelToken() {}
 
 // INTERCEPTING REQUESTS & RESPONSES
 axios.interceptors.request.use(
