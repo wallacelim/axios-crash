@@ -1,0 +1,22 @@
+{
+  "name": "axios-crash",
+  "version": "1.0.0",
+  "description": "> These are the files for the YouTube Axios crash course.",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wallacelim/axios-crash.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wallacelim/axios-crash/issues"
+  },
+  "homepage": "https://github.com/wallacelim/axios-crash#readme"
+}
