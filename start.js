@@ -1,46 +1,77 @@
 // GET REQUEST
-function getTodos() {
-  console.log('GET Request');
+async function getTodos() {
+  const response = await axios.get(
+    "https://jsonplaceholder.typicode.com/todos?_limit=5"
+  );
+  showOutput(response);
 }
 
 // POST REQUEST
-function addTodo() {
-  console.log('POST Request');
+async function addTodo() {
+  const response = await axios.post("https://jsonplaceholder.typicode.com", {
+    data: {
+      title: "New Todo",
+      completed: false,
+    },
+  });
+  showOutput(response);
 }
 
 // PUT/PATCH REQUEST
-function updateTodo() {
-  console.log('PUT/PATCH Request');
+/**
+ * NOTE: PUT is mostly used to replace an entire entry,
+ * while PATCH is mostly used to update fields in an entry
+ */
+async function updateTodo() {
+  const response = await axios.patch(
+    "https://jsonplaceholder.typicode.com/todos/1",
+    {
+      title: "Updated Todo",
+      completed: true,
+    }
+  );
+  showOutput(response);
 }
 
 // DELETE REQUEST
-function removeTodo() {
-  console.log('DELETE Request');
+async function removeTodo() {
+  const response = await axios.delete(
+    "https://jsonplaceholder.typicode.com/todos/1"
+  );
+  showOutput(response);
 }
 
-// SIMULTANEOUS DATA
-function getData() {
-  console.log('Simultaneous Request');
+// SIMULTANEOUS REQUESTS
+async function getData() {
+  const responses = await axios.all([
+    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=5"),
+    axios.get("https://jsonplaceholder.typicode.com/posts?_limit=5"),
+  ]);
+  const [todos, posts] = axios.spread((...responses) => [
+    responses[0],
+    responses[1],
+  ])(responses);
+  showOutput(posts);
 }
 
 // CUSTOM HEADERS
 function customHeaders() {
-  console.log('Custom Headers');
+  console.log("Custom Headers");
 }
 
 // TRANSFORMING REQUESTS & RESPONSES
 function transformResponse() {
-  console.log('Transform Response');
+  console.log("Transform Response");
 }
 
 // ERROR HANDLING
 function errorHandling() {
-  console.log('Error Handling');
+  console.log("Error Handling");
 }
 
 // CANCEL TOKEN
 function cancelToken() {
-  console.log('Cancel Token');
+  console.log("Cancel Token");
 }
 
 // INTERCEPTING REQUESTS & RESPONSES
@@ -49,7 +80,7 @@ function cancelToken() {
 
 // Show output in browser
 function showOutput(res) {
-  document.getElementById('res').innerHTML = `
+  document.getElementById("res").innerHTML = `
   <div class="card card-body mb-4">
     <h5>Status: ${res.status}</h5>
   </div>
@@ -84,14 +115,14 @@ function showOutput(res) {
 }
 
 // Event listeners
-document.getElementById('get').addEventListener('click', getTodos);
-document.getElementById('post').addEventListener('click', addTodo);
-document.getElementById('update').addEventListener('click', updateTodo);
-document.getElementById('delete').addEventListener('click', removeTodo);
-document.getElementById('sim').addEventListener('click', getData);
-document.getElementById('headers').addEventListener('click', customHeaders);
+document.getElementById("get").addEventListener("click", getTodos);
+document.getElementById("post").addEventListener("click", addTodo);
+document.getElementById("update").addEventListener("click", updateTodo);
+document.getElementById("delete").addEventListener("click", removeTodo);
+document.getElementById("sim").addEventListener("click", getData);
+document.getElementById("headers").addEventListener("click", customHeaders);
 document
-  .getElementById('transform')
-  .addEventListener('click', transformResponse);
-document.getElementById('error').addEventListener('click', errorHandling);
-document.getElementById('cancel').addEventListener('click', cancelToken);
+  .getElementById("transform")
+  .addEventListener("click", transformResponse);
+document.getElementById("error").addEventListener("click", errorHandling);
+document.getElementById("cancel").addEventListener("click", cancelToken);
