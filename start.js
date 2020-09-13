@@ -4,7 +4,10 @@ axios.defaults.headers.common["X-Auth-Token"] =
 // GET REQUEST
 async function getTodos() {
   const response = await axios.get(
-    "https://jsonplaceholder.typicode.com/todos?_limit=5"
+    "https://jsonplaceholder.typicode.com/todos?_limit=5",
+    {
+      timeout: 500, // Add a timeout of 500ms
+    }
   );
   showOutput(response);
 }
@@ -98,7 +101,10 @@ function transformResponse() {
 async function errorHandling() {
   try {
     const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/todoss?_limit=5"
+      "https://jsonplaceholder.typicode.com/todoss?_limit=5",
+      {
+        validateStatus: (status) => status < 500, // Reject only statuses that are >= 500
+      }
     );
     showOutput(response);
   } catch (error) {
@@ -144,6 +150,12 @@ axios.interceptors.request.use(
 );
 
 // AXIOS INSTANCES
+const axiosInstance = axios.create({
+  baseURL: "https://jsonplaceholder.typicode.com",
+});
+
+// Notice now the path is simply concatenated to baseURL
+axiosInstance.get("/comments").then(showOutput);
 
 // Show output in browser
 function showOutput(res) {
